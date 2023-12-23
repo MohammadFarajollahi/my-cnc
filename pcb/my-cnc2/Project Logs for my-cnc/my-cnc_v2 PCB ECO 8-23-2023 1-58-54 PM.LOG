@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=GND Pin=D2-A
+Removed Member From Class: ClassName=my-cnc Member=D2
+Added Component: Designator=D?(Diode 1n4148 SMD)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=GND Pin=D?-1
+Added Pin To Net: NetName=NetD?_2 Pin=D?-2
+Added Pin To Net: NetName=NetD?_2 Pin=L1-1
+Added Pin To Net: NetName=NetD?_2 Pin=VR1-2
+Added Net: Name=NetD?_2
+Added Member To Class: ClassName=my-cnc Member=Component C4 1uF
+Added Member To Class: ClassName=my-cnc Member=Component D? 1N4148
+Added Member To Class: ClassName=my-cnc Member=Component R2 1K
+Added Member To Class: ClassName=my-cnc Member=Component Y1 6 MHz
+Added Room: Name=my-cnc

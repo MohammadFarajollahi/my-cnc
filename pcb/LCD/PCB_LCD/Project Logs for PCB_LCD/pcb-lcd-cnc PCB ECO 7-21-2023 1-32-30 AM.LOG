@@ -1,0 +1,24 @@
+Added Component: Designator=IC1(TSSOP16)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Availability"; Value = "Not in stock"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Check_prices"; Value = "https://www.snapeda.com/parts/XPT2046/Xptek/view-part/?ref=eda"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MF"; Value = "Xptek"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MP"; Value = "XPT2046"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Package"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/XPT2046/Xptek/view-part/?ref=snap"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=VCC Pin=IC1-1
+Added Pin To Net: NetName=x+ Pin=IC1-2
+Added Pin To Net: NetName=y+ Pin=IC1-3
+Added Pin To Net: NetName=x- Pin=IC1-4
+Added Pin To Net: NetName=y- Pin=IC1-5
+Added Pin To Net: NetName=GND Pin=IC1-6
+Added Pin To Net: NetName=NetC2_2 Pin=IC1-9
+Added Pin To Net: NetName=NetC2_2 Pin=IC1-10
+Added Pin To Net: NetName=NetIC1_11 Pin=IC1-11
+Added Pin To Net: NetName=miso Pin=IC1-12
+Added Pin To Net: NetName=mosi Pin=IC1-14
+Added Pin To Net: NetName=cs_touch Pin=IC1-15
+Added Pin To Net: NetName=sck Pin=IC1-16
+Added Member To Class: ClassName=lcd_pin Member=Component IC1 XPT2046

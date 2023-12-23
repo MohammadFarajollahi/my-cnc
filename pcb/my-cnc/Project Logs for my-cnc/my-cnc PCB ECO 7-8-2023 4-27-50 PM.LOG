@@ -1,0 +1,5 @@
+Added Pin To Net: NetName=cs Pin=J?-SC
+Added Net: Name=cs
+Added Pin To Net: NetName=vdd Pin=J?-4
+Added Net: Name=vdd
+Added Room: Name=my-cnc

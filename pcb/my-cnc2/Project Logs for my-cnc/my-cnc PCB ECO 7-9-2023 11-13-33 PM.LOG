@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=rx_m329 Pin=D8-1
+Added Pin To Net: NetName=rx_m328 Pin=D8-1
+Added Pin To Net: NetName=tx_m328 Pin=D9-1
+Added Member To Class: ClassName=my-cnc Member=Component R2 1K
+Added Room: Name=my-cnc

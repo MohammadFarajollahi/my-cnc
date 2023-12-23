@@ -1,0 +1,12 @@
+Board Information Report
+Filename     : F:\ELECTRONIC\cod\my-cnc\pcb\my-cnc\my-cnc.PcbDoc
+Date         : 7/23/2023
+Time         : 3:01:47 PM
+Time Elapsed : 00:00:00
+
+Routing Information
+    Routing completion, 100.00%
+    Connections, 153
+    Connections routed, 153
+    Connections remaining, 0
+count : 4

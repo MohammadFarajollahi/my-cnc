@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=d25 Pin=U1-3
+Removed Pin From Net: NetName=3.3v Pin=U1-4
+Removed Member From Class: ClassName=my-cnc Member=C5
+Removed Member From Class: ClassName=my-cnc Member=D3
+Removed Member From Class: ClassName=my-cnc Member=D4
+Removed Member From Class: ClassName=my-cnc Member=D5
+Removed Member From Class: ClassName=my-cnc Member=D7
+Removed Member From Class: ClassName=my-cnc Member=R4
+Removed Member From Class: ClassName=my-cnc Member=R6
+Removed Member From Class: ClassName=my-cnc Member=T1
+Removed Member From Class: ClassName=my-cnc Member=U1
+Added Member To Class: ClassName=my-cnc Member=Component J2 GSD090144HR
+Added Room: Name=my-cnc

@@ -1,0 +1,7 @@
+Added Component: Designator=M5(Board Screw)
+Add component. Clean all parameters for all variants
+Added Member To Class: ClassName=my-cnc Member=Component C1 1uF
+Added Member To Class: ClassName=my-cnc Member=Component C4 1uF
+Added Member To Class: ClassName=my-cnc Member=Component M5 Screw
+Added Member To Class: ClassName=my-cnc Member=Component R2 1K
+Added Room: Name=my-cnc

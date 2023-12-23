@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=lcd_mosi Pin=touch_pin1-1
+Removed Pin From Net: NetName=lcd_miso Pin=touch_pin1-2
+Removed Pin From Net: NetName=lcd_sck Pin=touch_pin1-3
+Removed Pin From Net: NetName=touch_cs Pin=touch_pin1-4
+Removed Member From Class: ClassName=my-cnc Member=touch_pin1
+Added Pin To Net: NetName=touch_cs Pin=lcd_pin1-10
+Added Member To Class: ClassName=my-cnc Member=Component C4 1uF
+Added Member To Class: ClassName=my-cnc Member=Component R2 1K
+Added Room: Name=my-cnc

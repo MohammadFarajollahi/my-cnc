@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=lcd_reset Pin=lcd_pin1-6
+Added Pin To Net: NetName=lcd_reset Pin=R3-2
+Added Pin To Net: NetName=Netlcd_pin1_6 Pin=lcd_pin1-6
+Added Pin To Net: NetName=Netlcd_pin1_6 Pin=R3-1
+Added Net: Name=Netlcd_pin1_6
+Added Room: Name=my-cnc

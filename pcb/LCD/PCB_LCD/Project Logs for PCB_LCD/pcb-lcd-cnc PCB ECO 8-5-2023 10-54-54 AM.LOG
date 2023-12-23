@@ -1,0 +1,14 @@
+Added Component: Designator=J(GCT_FFC2B28-40-G)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Availability"; Value = "Unavailable"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MF"; Value = "Global Connector Technology"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MP"; Value = "FFC2B28-40-G"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "Package Analog Devices"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/FFC2B28-40-G/Global%20Connector%20Technology/view-part/4223068/?ref=snap"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Member To Class: ClassName=lcd_pin Member=Component J FFC2B28-40-G
+Added Member To Class: ClassName=lcd_pin Member=Component M? Screw
+Added Member To Class: ClassName=lcd_pin Member=Component M? Screw
+Added Member To Class: ClassName=lcd_pin Member=Component M? Screw
+Added Room: Name=lcd_pin

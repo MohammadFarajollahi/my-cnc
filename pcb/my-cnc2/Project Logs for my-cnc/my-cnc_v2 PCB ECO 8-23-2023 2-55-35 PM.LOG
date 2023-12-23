@@ -1,0 +1,11 @@
+Removed Pin From Net: NetName=GND Pin=J2-5
+Added Pin To Net: NetName=d5 Pin=J2-1
+Added Pin To Net: NetName=lcd_mosi Pin=J2-2
+Added Pin To Net: NetName=GND Pin=J2-3
+Added Pin To Net: NetName=3.3v Pin=J2-4
+Added Pin To Net: NetName=lcd_sck Pin=J2-5
+Added Pin To Net: NetName=lcd_miso Pin=J2-7
+Added Pin To Net: NetName=GND Pin=J2-G
+Added Member To Class: ClassName=my-cnc Member=Component J2 GSD090144HR
+Added Member To Class: ClassName=my-cnc Member=Component R2 1K
+Added Room: Name=my-cnc

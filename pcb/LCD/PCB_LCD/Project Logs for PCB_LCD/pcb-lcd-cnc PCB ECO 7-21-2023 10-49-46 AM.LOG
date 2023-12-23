@@ -1,0 +1,13 @@
+Added Component: Designator=M?(Board Screw)
+Add component. Clean all parameters for all variants
+Added Component: Designator=M?(Board Screw)
+Add component. Clean all parameters for all variants
+Added Component: Designator=M?(Board Screw)
+Add component. Clean all parameters for all variants
+Added Component: Designator=M?(Board Screw)
+Add component. Clean all parameters for all variants
+Added Member To Class: ClassName=lcd_pin Member=Component M? Screw
+Added Member To Class: ClassName=lcd_pin Member=Component M? Screw
+Added Member To Class: ClassName=lcd_pin Member=Component M? Screw
+Added Member To Class: ClassName=lcd_pin Member=Component M? Screw
+Added Room: Name=lcd_pin

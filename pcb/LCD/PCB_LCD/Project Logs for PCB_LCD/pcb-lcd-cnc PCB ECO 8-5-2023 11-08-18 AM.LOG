@@ -1,0 +1,93 @@
+Removed Pin From Net: NetName=x+ Pin=J1-1
+Removed Pin From Net: NetName=y+ Pin=J1-2
+Removed Pin From Net: NetName=x- Pin=J1-3
+Removed Pin From Net: NetName=y- Pin=J1-4
+Removed Pin From Net: NetName=GND Pin=J1-5
+Removed Pin From Net: NetName=VCC Pin=J1-6
+Removed Pin From Net: NetName=VCC Pin=J1-7
+Removed Pin From Net: NetName=cs_lcd Pin=J1-9
+Removed Pin From Net: NetName=rs Pin=J1-10
+Removed Pin From Net: NetName=sck Pin=J1-11
+Removed Pin From Net: NetName=VCC Pin=J1-12
+Removed Pin From Net: NetName=mosi Pin=J1-13
+Removed Pin From Net: NetName=GND Pin=J1-16
+Removed Pin From Net: NetName=GND Pin=J1-17
+Removed Pin From Net: NetName=GND Pin=J1-18
+Removed Pin From Net: NetName=GND Pin=J1-19
+Removed Pin From Net: NetName=GND Pin=J1-20
+Removed Pin From Net: NetName=GND Pin=J1-21
+Removed Pin From Net: NetName=GND Pin=J1-22
+Removed Pin From Net: NetName=GND Pin=J1-23
+Removed Pin From Net: NetName=GND Pin=J1-24
+Removed Pin From Net: NetName=GND Pin=J1-25
+Removed Pin From Net: NetName=GND Pin=J1-26
+Removed Pin From Net: NetName=GND Pin=J1-27
+Removed Pin From Net: NetName=GND Pin=J1-28
+Removed Pin From Net: NetName=GND Pin=J1-29
+Removed Pin From Net: NetName=GND Pin=J1-30
+Removed Pin From Net: NetName=GND Pin=J1-31
+Removed Pin From Net: NetName=GND Pin=J1-32
+Removed Pin From Net: NetName=VCC Pin=J1-33
+Removed Pin From Net: NetName=GND Pin=J1-37
+Removed Member From Class: ClassName=lcd_pin Member=J1
+Added Pin To Net: NetName=x+ Pin=J-1
+Added Pin To Net: NetName=y+ Pin=J-2
+Added Pin To Net: NetName=x- Pin=J-3
+Added Pin To Net: NetName=y- Pin=J-4
+Added Pin To Net: NetName=GND Pin=J-5
+Added Pin To Net: NetName=VCC Pin=J-6
+Added Pin To Net: NetName=VCC Pin=J-7
+Added Pin To Net: NetName=cs_lcd Pin=J-9
+Added Pin To Net: NetName=rs Pin=J-10
+Added Pin To Net: NetName=sck Pin=J-11
+Added Pin To Net: NetName=VCC Pin=J-12
+Added Pin To Net: NetName=mosi Pin=J-13
+Added Pin To Net: NetName=GND Pin=J-16
+Added Pin To Net: NetName=GND Pin=J-17
+Added Pin To Net: NetName=GND Pin=J-18
+Added Pin To Net: NetName=GND Pin=J-19
+Added Pin To Net: NetName=GND Pin=J-20
+Added Pin To Net: NetName=GND Pin=J-21
+Added Pin To Net: NetName=GND Pin=J-22
+Added Pin To Net: NetName=GND Pin=J-23
+Added Pin To Net: NetName=GND Pin=J-24
+Added Pin To Net: NetName=GND Pin=J-25
+Added Pin To Net: NetName=GND Pin=J-26
+Added Pin To Net: NetName=GND Pin=J-27
+Added Pin To Net: NetName=GND Pin=J-28
+Added Pin To Net: NetName=GND Pin=J-29
+Added Pin To Net: NetName=GND Pin=J-30
+Added Pin To Net: NetName=GND Pin=J-31
+Added Pin To Net: NetName=GND Pin=J-32
+Added Pin To Net: NetName=VCC Pin=J-33
+Added Pin To Net: NetName=GND Pin=J-37
+Added Pin To Net: NetName=GND Pin=J-S1
+Added Pin To Net: NetName=GND Pin=J-S2
+Added Pin To Net: NetName=NetJ_14 Pin=J-14
+Added Pin To Net: NetName=NetJ_14 Pin=R1-1
+Added Net: Name=NetJ_14
+Added Pin To Net: NetName=NetJ_15 Pin=J-15
+Added Pin To Net: NetName=NetJ_15 Pin=R2-1
+Added Net: Name=NetJ_15
+Added Pin To Net: NetName=NetJ_34 Pin=J-34
+Added Pin To Net: NetName=NetJ_34 Pin=R8-1
+Added Net: Name=NetJ_34
+Added Pin To Net: NetName=NetJ_35 Pin=J-35
+Added Pin To Net: NetName=NetJ_35 Pin=R9-1
+Added Net: Name=NetJ_35
+Added Pin To Net: NetName=NetJ_36 Pin=J-36
+Added Pin To Net: NetName=NetJ_36 Pin=R10-1
+Added Net: Name=NetJ_36
+Added Pin To Net: NetName=NetJ_38 Pin=J-38
+Added Pin To Net: NetName=NetJ_38 Pin=R11-1
+Added Net: Name=NetJ_38
+Added Pin To Net: NetName=NetJ_39 Pin=J-39
+Added Pin To Net: NetName=NetJ_39 Pin=R12-1
+Added Net: Name=NetJ_39
+Added Pin To Net: NetName=NetJ_40 Pin=J-40
+Added Pin To Net: NetName=NetJ_40 Pin=R13-1
+Added Net: Name=NetJ_40
+Added Member To Class: ClassName=lcd_pin Member=Component M? Screw
+Added Member To Class: ClassName=lcd_pin Member=Component M? Screw
+Added Member To Class: ClassName=lcd_pin Member=Component M? Screw
+Added Room: Name=lcd_pin

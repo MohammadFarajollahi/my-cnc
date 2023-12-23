@@ -1,0 +1,20 @@
+Added Component: Designator=Program(HDR1X8)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=rx_m328 Pin=Program-1
+Added Pin To Net: NetName=tx_m328 Pin=Program-2
+Added Pin To Net: NetName=reset_m328 Pin=Program-3
+Added Pin To Net: NetName=GND Pin=Program-4
+Added Pin To Net: NetName=VCC Pin=Program-5
+Added Pin To Net: NetName=end_z Pin=Program-6
+Added Pin To Net: NetName=miso_m328 Pin=Program-7
+Added Pin To Net: NetName=miso_m328 Pin=U4-16
+Added Net: Name=miso_m328
+Added Pin To Net: NetName=sck_m328 Pin=Program-8
+Added Pin To Net: NetName=sck_m328 Pin=U4-17
+Added Net: Name=sck_m328
+Added Member To Class: ClassName=my-cnc Member=Component Program Header 8
+Added Member To Class: ClassName=my-cnc Member=Component R2 1K
+Added Room: Name=my-cnc

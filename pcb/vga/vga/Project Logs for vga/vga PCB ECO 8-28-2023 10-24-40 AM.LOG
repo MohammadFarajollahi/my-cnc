@@ -1,0 +1,44 @@
+Added Pin To Net: NetName=abort Pin=J?-7
+Added Pin To Net: NetName=abort Pin=P?-1
+Added Net: Name=abort
+Added Pin To Net: NetName=d25 Pin=P?-13
+Added Net: Name=d25
+Added Pin To Net: NetName=dir_x Pin=J?-14
+Added Pin To Net: NetName=dir_x Pin=P?-8
+Added Net: Name=dir_x
+Added Pin To Net: NetName=dir_y Pin=J?-15
+Added Pin To Net: NetName=dir_y Pin=P?-10
+Added Net: Name=dir_y
+Added Pin To Net: NetName=dir_z Pin=P?-12
+Added Net: Name=dir_z
+Added Pin To Net: NetName=enable Pin=P?-14
+Added Net: Name=enable
+Added Pin To Net: NetName=end_x Pin=J?-5
+Added Pin To Net: NetName=end_x Pin=P?-16
+Added Net: Name=end_x
+Added Pin To Net: NetName=end_y Pin=J?-4
+Added Pin To Net: NetName=end_y Pin=P?-18
+Added Net: Name=end_y
+Added Pin To Net: NetName=end_z Pin=P?-20
+Added Net: Name=end_z
+Added Pin To Net: NetName=GND Pin=P?-15
+Added Net: Name=GND
+Added Pin To Net: NetName=hold Pin=J?-6
+Added Pin To Net: NetName=hold Pin=P?-3
+Added Net: Name=hold
+Added Pin To Net: NetName=resume Pin=J?-1
+Added Pin To Net: NetName=resume Pin=P?-5
+Added Net: Name=resume
+Added Pin To Net: NetName=step_x Pin=J?-12
+Added Pin To Net: NetName=step_x Pin=P?-2
+Added Net: Name=step_x
+Added Pin To Net: NetName=step_y Pin=J?-13
+Added Pin To Net: NetName=step_y Pin=P?-4
+Added Net: Name=step_y
+Added Pin To Net: NetName=step_z Pin=P?-6
+Added Net: Name=step_z
+Added Pin To Net: NetName=VCC Pin=P?-17
+Added Net: Name=VCC
+Added Pin To Net: NetName=vin Pin=P?-19
+Added Net: Name=vin
+Added Room: Name=vga

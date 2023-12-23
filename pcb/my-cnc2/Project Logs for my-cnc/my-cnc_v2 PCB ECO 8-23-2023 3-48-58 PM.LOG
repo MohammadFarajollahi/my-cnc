@@ -1,0 +1,49 @@
+Removed Member From Class: ClassName=my-cnc Member=P?
+Change Component Designator: OldDesignator=C6 NewDesignator=C5
+Change Component Designator: OldDesignator=C7 NewDesignator=C6
+Change Component Designator: OldDesignator=C8 NewDesignator=C7
+Change Component Designator: OldDesignator=C9 NewDesignator=C8
+Change Component Designator: OldDesignator=C10 NewDesignator=C9
+Change Component Designator: OldDesignator=C11 NewDesignator=C10
+Change Component Designator: OldDesignator=C12 NewDesignator=C11
+Change Component Designator: OldDesignator=D6 NewDesignator=D3
+Change Component Designator: OldDesignator=D8 NewDesignator=D4
+Change Component Designator: OldDesignator=D9 NewDesignator=D5
+Change Component Designator: OldDesignator=D10 NewDesignator=D6
+Change Component Designator: OldDesignator=D11 NewDesignator=D7
+Change Component Designator: OldDesignator=D? NewDesignator=D2
+Change Component Designator: OldDesignator=J2 NewDesignator=J1
+Change Component Designator: OldDesignator=M5 NewDesignator=M2
+Change Component Designator: OldDesignator=P1 NewDesignator=P2
+Change Component Designator: OldDesignator=P? NewDesignator=P1
+Change Component Designator: OldDesignator=Program NewDesignator=Program1
+Change Component Designator: OldDesignator=Q? NewDesignator=Q1
+Change Component Designator: OldDesignator=Q? NewDesignator=Q2
+Change Component Designator: OldDesignator=R3 NewDesignator=R5
+Change Component Designator: OldDesignator=R5 NewDesignator=R3
+Change Component Designator: OldDesignator=R7 NewDesignator=R4
+Change Component Designator: OldDesignator=R8 NewDesignator=R6
+Change Component Designator: OldDesignator=R9 NewDesignator=R7
+Change Component Designator: OldDesignator=R10 NewDesignator=R8
+Change Component Designator: OldDesignator=R11 NewDesignator=R9
+Change Component Designator: OldDesignator=R12 NewDesignator=R10
+Change Component Designator: OldDesignator=U2 NewDesignator=U1
+Change Component Designator: OldDesignator=U3 NewDesignator=U2
+Change Component Designator: OldDesignator=U4 NewDesignator=U3
+Change Net Name : Old Net Name=NetC6_1 New Net Name=NetC5_1
+Change Net Name : Old Net Name=NetC7_2 New Net Name=NetC6_2
+Change Net Name : Old Net Name=NetC11_2 New Net Name=NetC10_2
+Change Net Name : Old Net Name=NetC12_2 New Net Name=NetC11_2
+Change Net Name : Old Net Name=NetD6_1 New Net Name=NetD3_1
+Change Net Name : Old Net Name=NetD8_2 New Net Name=NetD4_2
+Change Net Name : Old Net Name=NetD9_2 New Net Name=NetD5_2
+Change Net Name : Old Net Name=NetD10_2 New Net Name=NetD6_2
+Change Net Name : Old Net Name=NetD11_1 New Net Name=NetD7_1
+Change Net Name : Old Net Name=NetD?_2 New Net Name=NetD2_2
+Change Net Name : Old Net Name=NetQ?_1 New Net Name=NetQ1_1
+Added Pin To Net: NetName=NetQ2_1 Pin=Q2-1
+Added Pin To Net: NetName=NetQ2_1 Pin=R2-2
+Added Net: Name=NetQ2_1
+Added Member To Class: ClassName=my-cnc Member=Component P2 USB Connector
+Added Member To Class: ClassName=my-cnc Member=Component Q1 BC817
+Added Room: Name=my-cnc

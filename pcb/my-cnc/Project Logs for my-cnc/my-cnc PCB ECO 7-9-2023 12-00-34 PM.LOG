@@ -1,0 +1,16 @@
+Added Component: Designator=VR1(TO170P1524X483-6N)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Availability"; Value = "Unavailable"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MF"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MP"; Value = "LM2596S-5.0"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "None"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetC1_1 Pin=VR1-1
+Added Pin To Net: NetName=NetD2_C Pin=VR1-2
+Added Pin To Net: NetName=GND Pin=VR1-3
+Added Pin To Net: NetName=VCC Pin=VR1-4
+Added Pin To Net: NetName=GND Pin=VR1-5
+Added Pin To Net: NetName=GND Pin=VR1-6
+Added Member To Class: ClassName=my-cnc Member=Component VR1 LM2596S-5.0
+Added Room: Name=my-cnc

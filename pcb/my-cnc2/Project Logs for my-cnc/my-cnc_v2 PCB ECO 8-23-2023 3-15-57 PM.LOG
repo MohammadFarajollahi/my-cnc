@@ -1,0 +1,3 @@
+Added Pin To Net: NetName=d25 Pin=P?-13
+Added Member To Class: ClassName=my-cnc Member=Component R2 1K
+Added Room: Name=my-cnc

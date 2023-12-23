@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=reset Pin=U2-27
+Added Pin To Net: NetName=reset Pin=U2-11
+Added Member To Class: ClassName=my-cnc Member=Component R2 1K
+Added Room: Name=my-cnc
