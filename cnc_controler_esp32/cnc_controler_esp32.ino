@@ -83,6 +83,24 @@ int line_number2;
 int gcode_line;
 String read_resume_line;
 int flash_test;
+
+
+//*****************for read files*******************
+String files[150];
+int count_files;
+int page;
+int file_select;
+int exit_main;
+int hasan;
+int page_number1;
+int ii;
+int jj;
+int count_l;
+String select_file[10];
+String file_name;
+String file1;
+int usb;
+
 //********************setup********************
 void setup() {
   //***usb***
@@ -566,228 +584,10 @@ void input_touch() {
 }
 
 
-//****************************************************************************gcode****************************************************************
-//****************************************************************************gcode****************************************************************
-//****************************************************************************gcode****************************************************************
-//****************************************************************************gcode****************************************************************
-String files[150];
-int count_files;
-int page;
-int file_select;
-int exit_main;
-int hasan;
-int page_number1;
-int ii;
-int jj;
-int count_l;
-String select_file[10];
-String file_name;
-String file1;
+//******************************************************************gcode***************************************************************************************
+//******************************************************************gcode***************************************************************************************
+//******************************************************************gcode***************************************************************************************
 
-void listDir(fs::FS &fs, const char *dirname, uint8_t levels) {
-  Serial.printf("Listing directory: %s\n", dirname);
-
-  File root = fs.open(dirname);
-  if (!root) {
-    Serial.println("Failed to open directory");
-    return;
-  }
-  if (!root.isDirectory()) {
-    Serial.println("Not a directory");
-    return;
-  }
-
-  File file = root.openNextFile();
-  while (file) {
-    if (file.isDirectory()) {
-      Serial.print("  DIR : ");
-      Serial.println(file.name());
-      files[count_files] = file.name();
-      ++count_files;
-      if (levels) {
-        listDir(fs, file.name(), levels - 1);
-      }
-    } else {
-      Serial.print("  FILE: ");
-      Serial.print(file.name());
-      Serial.print("  SIZE: ");
-      Serial.println(file.size());
-      files[count_files] = file.name();
-      ++count_files;
-    }
-    file = root.openNextFile();
-  }
-}
-
-//******************************************************************gcode_test2***************************************************************************************
-//******************************************************************gcode_test2***************************************************************************************
-//******************************************************************gcode_test2***************************************************************************************
-//******************************************************************gcode_test2***************************************************************************************
-//******************************************************************gcode_test2***************************************************************************************
-
-void select_storage() {
-  tft.fillScreen(TFT_WHITE);
-  drawSdJpeg("/select_storage.jpg", 0, 0);
-  while (1) {
-    input_touch3();
-
-    if (x_t > 1 && x_t < 60 && y_t > 250 && y_t < 300) {
-      digitalWrite(buzzer, HIGH);
-      delay(50);
-      digitalWrite(buzzer, LOW);
-      load_page();
-      x_t = 0;
-      y_t = 0;
-    }
-  }
-}
-
-void gcod_start() {
-  tft.fillScreen(TFT_WHITE);
-  tft.setTextFont(2);
-  tft.setTextSize(3);
-  tft.setCursor(10, 10);
-  tft.println("LOADING FILES...");
-  listDir(SD, "/files", 0);
-  count_files = 0;
-  for (int j = 0; j <= 100; j++) {
-    files[j] = "";
-  }
-  listDir(SD, "/files", 0);
-  tft.setTextColor(TFT_BLACK, TFT_WHITE);
-  Serial.println("print my files");
-  for (int i = 0; i <= count_files; i++) {
-    Serial.println(files[i]);
-  }
-  page_number1 = 1;
-  page = 0;
-  exit_main = 0;
-  load_page();
-  x_t = 0;
-  y_t = 0;
-}
-
-void g_cod2() {
-  gcod_start();
-  while (1) {
-    input_touch3();
-
-    //********back**********
-    if (x_t > 1 && x_t < 60 && y_t > 250 && y_t < 300) {
-      digitalWrite(buzzer, HIGH);
-      delay(50);
-      digitalWrite(buzzer, LOW);
-      if (page == 0) {
-        exit_main = 1;
-      }
-      if (page >= 1) {
-        --page_number1;
-        --page;
-        load_page();
-      }
-      x_t = 0;
-      y_t = 0;
-    }
-
-    //********next**********
-    if (x_t > 420 && x_t < 480 && y_t > 250 && y_t < 300) {
-      x_t = 0;
-      y_t = 0;
-      digitalWrite(buzzer, HIGH);
-      delay(50);
-      digitalWrite(buzzer, LOW);
-      if (page <= 10) {
-        ++page_number1;
-        ++page;
-        load_page();
-      }
-    }
-
-    //***************select_file*********
-    //****1****
-    if (x_t > 80 && x_t < 350 && y_t > 25 && y_t < 60) {
-      Serial.println(" touch 1");
-      x_t = 0;
-      y_t = 0;
-      digitalWrite(buzzer, HIGH);
-      delay(50);
-      digitalWrite(buzzer, LOW);
-      file_name = select_file[0];
-      run_gcod();
-    }
-
-    //****2****
-    if (x_t > 80 && x_t < 350 && y_t > 80 && y_t < 105) {
-      Serial.println(" touch 2");
-      x_t = 0;
-      y_t = 0;
-      digitalWrite(buzzer, HIGH);
-      delay(50);
-      digitalWrite(buzzer, LOW);
-      file_name = select_file[1];
-      run_gcod();
-    }
-    //****3****
-    if (x_t > 80 && x_t < 350 && y_t > 125 && y_t < 150) {
-      Serial.println(" touch 3");
-      x_t = 0;
-      y_t = 0;
-      digitalWrite(buzzer, HIGH);
-      delay(50);
-      digitalWrite(buzzer, LOW);
-      file_name = select_file[2];
-      run_gcod();
-    }
-    //****4****
-    if (x_t > 80 && x_t < 350 && y_t > 175 && y_t < 206) {
-      Serial.println(" touch 4");
-      x_t = 0;
-      y_t = 0;
-      digitalWrite(buzzer, HIGH);
-      delay(50);
-      digitalWrite(buzzer, LOW);
-      file_name = select_file[3];
-      run_gcod();
-    }
-    //****5****
-    if (x_t > 80 && x_t < 350 && y_t > 230 && y_t < 255) {
-      Serial.println(" touch 5");
-      x_t = 0;
-      y_t = 0;
-      digitalWrite(buzzer, HIGH);
-      delay(50);
-      digitalWrite(buzzer, LOW);
-      file_name = select_file[4];
-      run_gcod();
-    }
-
-
-    if (exit_main == 1) {
-      x_t = 0;
-      y_t = 0;
-      start_show();
-      break;
-      delay(1000);
-    }
-  }
-}
-
-
-void writeFile(fs::FS &fs, const char *path, const char *message) {
-  Serial.printf("Writing file: %s\n", path);
-
-  File file = fs.open(path, FILE_WRITE);
-  if (!file) {
-    Serial.println("Failed to open file for writing");
-    return;
-  }
-  if (file.print(message)) {
-    Serial.println("File written");
-  } else {
-    Serial.println("Write failed");
-  }
-  file.close();
-}
 
 //************************************************read_files*****************************************************
 //**************************************************read_files*************************************************************
@@ -1814,8 +1614,10 @@ void input_touch3() {
 //************load_pages************
 void load_page() {
   tft.fillScreen(TFT_WHITE);
-  if (page == 0) drawSdJpeg("/gcod-files1.jpg", 0, 0);
-  if (page >= 1) drawSdJpeg("/gcod-files.jpg", 0, 0);
+  if (page == 0 && usb == 0) drawSdJpeg("/gcod-files1.jpg", 0, 0);
+  if (page >= 1 && usb == 0) drawSdJpeg("/gcod-files.jpg", 0, 0);
+  if (page == 0 && usb == 1) drawSdJpeg("/gcod-files3.jpg", 0, 0);
+  if (page >= 1 && usb == 1) drawSdJpeg("/gcod-files2.jpg", 0, 0);
   tft.setTextFont(2);
   tft.setTextSize(2);
   tft.setCursor(170, 285);
