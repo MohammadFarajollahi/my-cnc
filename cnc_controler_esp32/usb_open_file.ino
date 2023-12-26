@@ -1,4 +1,21 @@
 
+//*****************************************************************************usb list files****************************************************************************************
+void usbfilelist(String ss) {
+                    
+  while (flashDrive.listDir()) {                              // reading next file
+    if (flashDrive.getFileAttrb() == CH376_ATTR_DIRECTORY) {  //directory
+      Serial.print('/');
+      Serial.println(flashDrive.getFileName());  // get the actual file name
+      files[count_files] = flashDrive.getFileName();
+      ++count_files;
+    } else {
+      Serial.println(flashDrive.getFileName());  // get the actual file name
+      files[count_files] = flashDrive.getFileName();
+      ++count_files;
+    }
+  }
+}
+
 
 
 //**************read number of line in file***************
@@ -43,173 +60,7 @@ void readFile2_usb(String ss) {
 
 
 
-//************ready_run***************
-void ready_run2() {
 
-  tft.fillRoundRect(5, 150, 200, 15, 5, TFT_BLACK);
-  tft.fillRoundRect(6, 151, 7, 13, 5, TFT_GREEN);
-  exit_run = 0;
-  line_number2 = 0;
-  line_number = 0;
-  first_send = 0;
-  send_command = 0;
-  send_ = 1;
-  ok_count = 0;
-  digitalWrite(uart_enbale, HIGH);
-  digitalWrite(buzzer, HIGH);
-  delay(200);
-  digitalWrite(buzzer, LOW);
-  hwSerial.println("M3 S0");
-  delay(200);
-  print_lcd4("Start file ...");
-  file1 = file_name;
-
-  delay(2000);
-  digitalWrite(buzzer, HIGH);
-  delay(200);
-  digitalWrite(buzzer, LOW);
-  delay(200);
-  digitalWrite(buzzer, HIGH);
-  delay(1000);
-  digitalWrite(buzzer, LOW);
-  readFile2(file1);
-  delay(200);
-}
-
-
-
-//*****************************************************main_read_line&&run*********************************************
-//*****************************************************main_read_line&&run*********************************************
-//*****************************************************main_read_line&&run*********************************************
-//*****************************************************main_read_line&&run*********************************************
-//*****************************************************main_read_line&&run*********************************************
-void readFile2(String ss) {
-  Serial.println("Reading file: ");
-  Serial.println(ss);
-
-  flashDrive.setFileName((char *)ss.c_str());  //set the file name
-  flashDrive.openFile();                       //open the file
-
-  send_command = 0;
-  String data;
-  int start_cammand;
-  start_cammand = 0;
-  ok_count = 0;
-  Serial.print("Read from file: ");
-  while (!flashDrive.getEOF()) {
-    readMore = true;
-    if (exit_run == 1) {
-      hwSerial.println("M5");
-      readMore = false;
-      break;
-    }
-    while (readMore) {  // our temporary buffer where we read data from flash drive and the size of that buffer
-
-
-      if (send_ == 1) {
-        if (resume_mode == 1) {
-          while (1) {
-            readMore = flashDrive.readFileUntil('\n', adatBuffer, sizeof(adatBuffer));  //new line character
-            data = adatBuffer;
-            ++line_number2;
-            if (line_number2 >= line_found) break;
-          }
-        }
-
-        if (resume_mode == 0) {
-          readMore = flashDrive.readFileUntil('\n', adatBuffer, sizeof(adatBuffer));  //new line character
-          data = adatBuffer;
-          ++line_number2;
-        }
-        hwSerial.println(data);
-        data_save = data;
-      }
-
-      if (first_send == 0) ++send_command;
-
-      if (first_send == 1) {
-        while (1) {
-
-
-          ReadString = hwSerial.readStringUntil('\n');
-          ReadString.trim();
-          Serial.println(ReadString);
-          if (ReadString == "ok") {
-            ++ok_count;
-            ReadString = "";
-          }
-          if (ok_count >= 4) {
-            ok_count = 0;
-            send_ = 1;
-            Serial.println(data);
-            print_lcd3(data);
-            control();
-            ac_input();
-            ac_control();
-            print_line(String(line_number2));
-            //*********************Loading*********************
-            int loading = map(line_number2, 0, gcode_line, 7, 195);
-            tft.fillRoundRect(6, 151, loading, 13, 5, TFT_GREEN);
-            //*********************Loading*********************
-            //delay(500);
-            ReadString = "";
-            break;
-          }
-          //}
-        }
-      }
-
-
-      //*************************************first send**************************************8
-      if (first_send == 0) {
-        if (send_command >= 8) {
-          first_send = 1;
-          send_command = 0;
-          Serial.println("8 send");
-          while (1) {
-            while (hwSerial.available() == 0) {}
-            ReadString = hwSerial.readStringUntil('\n');
-            ReadString.trim();
-            Serial.println(ReadString);
-            if (ReadString == "ok") {
-              ReadString = "";
-              ++start_cammand;
-            }
-            if (start_cammand >= 24) {
-              //delay(5000);
-              Serial.println("first ok");
-              break;
-            }
-          }
-        }
-      }
-
-      if (exit_run == 1) {
-        hwSerial.println("M5");
-        readMore = false;
-        break;
-      }
-    }
-
-    // if (exit_run == 1) {
-    //   while (readMore) {                                                            // our temporary buffer where we read data from flash drive and the size of that buffer
-    //     readMore = flashDrive.readFileUntil('\n', adatBuffer, sizeof(adatBuffer));  //new line character
-    //   }
-    // }
-
-    ////
-  }
-  flashDrive.closeFile();
-  hwSerial.println("M5");
-  print_lcd4("***End file***");
-  digitalWrite(buzzer, HIGH);
-  delay(500);
-  digitalWrite(buzzer, LOW);
-  delay(500);
-  digitalWrite(buzzer, HIGH);
-  delay(1000);
-  digitalWrite(buzzer, LOW);
-}
 
 
 
@@ -294,3 +145,48 @@ void frame2() {
   // Serial.print("Y: ");
   // Serial.println(y_p);
 }
+
+
+
+
+
+
+//******************************************************kherto pert*************************************************************
+
+//*************************************************************************read from flash************************************************************************************
+void read_resum() {
+
+  flashDrive.setFileName("RESUME.TXT");  //set the file name
+  flashDrive.openFile();                 //open the file
+  readMore = true;
+  //read data from flash drive until we reach EOF
+  while (!flashDrive.getEOF()) {
+    readMore = true;
+    while (readMore) {                                                            // our temporary buffer where we read data from flash drive and the size of that buffer
+      readMore = flashDrive.readFileUntil('\n', adatBuffer, sizeof(adatBuffer));  //new line character
+      Serial.print(adatBuffer);                                                   //print the contents of the temporary buffer
+      read_resume_line = adatBuffer;
+      Serial.print(read_resume_line);
+    }
+  }
+  flashDrive.closeFile();  //at the end, close the file
+}
+
+
+//**********************************************************************save to flash drive************************************************************************************
+void write_File_resum(String ss) {
+  String str = "salam jojo";
+  Serial.print("data:");
+  Serial.println(str);
+  int str_len = str.length() + 1;
+  Serial.println("COMMAND1: Create and write data to file: resum files");  // Create a file called TEST1.TXT
+  flashDrive.setFileName("RESUME.TXT");                                    //set the file name
+  flashDrive.openFile();                                                  //open the file
+
+  flashDrive.writeFile((char *)str.c_str(), str_len);
+
+  flashDrive.closeFile();  //at the end, close the file
+  Serial.println("Done!");
+}
+
+

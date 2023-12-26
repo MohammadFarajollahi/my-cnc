@@ -13,7 +13,7 @@
 // Connect to SPI port: MISO, MOSI, SCK
 
 // use this if no other device are attached to SPI port(MISO pin used as interrupt)
-Ch376msc flashDrive(10); // chipSelect
+Ch376msc flashDrive(26); // chipSelect
 
 //If the SPI port shared with other devices e.g SD card, display, etc. remove from comment the code below and put the code above in a comment
 //Ch376msc flashDrive(10, 9); // chipSelect, interrupt pin
@@ -59,12 +59,13 @@ void loop() {
 
       case 49: //1
         printInfo("COMMAND1: Create and write data to file : TEST1.TXT");    // Create a file called TEST1.TXT
-          flashDrive.setFileName("TEST1.TXT");  //set the file name
+          flashDrive.setFileName("DODOL1.TXT");  //set the file name
           flashDrive.openFile();                //open the file
 
-          for(int a = 0; a < 20; a++){          //write text from string(adat) to flash drive 20 times
+         // for(int a = 0; a < 20; a++){          //write text from string(adat) to flash drive 20 times
             flashDrive.writeFile(adat, strlen(adat)); //string, string length
-          }
+            delay(200);
+        //  }
           flashDrive.closeFile();               //at the end, close the file
         printInfo("Done!");
         break;

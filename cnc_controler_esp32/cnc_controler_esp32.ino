@@ -100,7 +100,9 @@ String select_file[10];
 String file_name;
 String file1;
 int usb;
-
+int usb_in;
+int usb_in_count;
+int load_again;
 //********************setup********************
 void setup() {
   //***usb***
@@ -226,6 +228,7 @@ void setup() {
   //tft.pushImage(0,0,480,320,menu );
   //delay(2000);
   start_show();
+
 }
 
 
@@ -811,6 +814,7 @@ void read_axis() {
     y_pos = y_p;
   }
 }
+
 
 void readFile4(fs::FS &fs, const char *path) {
   Serial.printf("Reading file: %s\n", path);

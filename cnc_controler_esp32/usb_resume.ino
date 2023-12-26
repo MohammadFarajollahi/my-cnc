@@ -1,42 +1,63 @@
 
+//***********************22222222222222************************
+//***********************22222222222222**********************************
+//***********************22222222222222***************************************************
+//*************************************************************************get posision***************************************************************************************
+void readFile4_usb(String ss) {
+  Serial.println("readFile4_usb");
+  Serial.print("Reading file: ");
+  Serial.print(ss);
 
-void read_resum() {
+  flashDrive.setFileName((char *)ss.c_str());
+  flashDrive.openFile();
 
-  flashDrive.setFileName("RESUME.TXT");  //set the file name
-  flashDrive.openFile();                 //open the file
-  readMore = true;
-  //read data from flash drive until we reach EOF
+  Serial.print("Read from file: ");
+  line_count2 = 0;
+  line_found = 0;
+  line_found = line_number - 10;
+
   while (!flashDrive.getEOF()) {
     readMore = true;
-    while (readMore) {  // our temporary buffer where we read data from flash drive and the size of that buffer
+    while (readMore) {
       readMore = flashDrive.readFileUntil('\n', adatBuffer, sizeof(adatBuffer));  //new line character
-      Serial.print(adatBuffer);  //print the contents of the temporary buffer
-      read_resume_line = adatBuffer;
-      Serial.print(read_resume_line);
+      data_read4 = adatBuffer;
+      ++line_count2;
+      //Serial.print("Line: ");
+      //Serial.println(String(line_count2));
+
+      if (line_count2 == 1) {
+        print_lcd4("Zero point");
+        hwSerial.println("G92 X0 Y0 Z0");
+        delay(100);
+        hwSerial.println(data_read4);
+        Serial.println(data_read4);
+      }
+
+      if (line_count2 == 2) {
+        hwSerial.println(data_read4);
+        Serial.println(data_read4);
+      }
+
+      if (line_count2 == line_found) {
+        read_axis();
+        Serial.println("Next line");
+      }
+      //*****************
     }
   }
-  flashDrive.closeFile();  //at the end, close the file
+  ///Serial.println(s1);
+ flashDrive.closeFile();
 }
 
 
 
-void write_resum() {
-  String str = "This is my string";
-  int str_len = str.length() + 1;
-  Serial.println("COMMAND1: Create and write data to file : TEST1.TXT");  // Create a file called TEST1.TXT
-  flashDrive.setFileName("TEST1.TXT");                                    //set the file name
-  flashDrive.openFile();                                                  //open the file
 
-  flashDrive.writeFile((char*)str.c_str(), str_len);
-
-  flashDrive.closeFile();  //at the end, close the file
-  Serial.println("Done!");
-}
-
-
-
-//*******resume file**********
+//***************11111111111111*****************
+//***************11111111111111***************************
+//***************11111111111111*************************************
+//***************************************************************************************ready to resum**********************************************************************
 void resume_file2() {
+  Serial.println("resume_file2");
   digitalWrite(uart_enbale, HIGH);
   line_count2 = 0;
   print_lcd4("Move to Corner");
@@ -45,13 +66,13 @@ void resume_file2() {
     input_serial2();
     if (ReadString == "ok") break;
   }
-  delay(5000);
+  delay(3000);
   print_lcd4("Starting file...");
-  const char *file3 = file1.c_str();
-  readFile4(SD, file3);
+  //const char *file3 = file1.c_str();
+  readFile4_usb(file1);
   String move_to_resume = "G0 " + x_pos + " " + y_pos + " " + "S0";  //****for sang qabr*******
   hwSerial.println(move_to_resume);
   print_lcd3(move_to_resume);
-  ready_run();
+  ready_run2();
   digitalWrite(uart_enbale, LOW);
 }
