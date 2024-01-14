@@ -29,7 +29,7 @@ void g_cod2() {
   gcod_start();
   while (1) {
     input_touch3();
-
+    usb_check2();
     //********back**********
     if (x_t > 1 && x_t < 60 && y_t > 250 && y_t < 300) {
       digitalWrite(buzzer, HIGH);

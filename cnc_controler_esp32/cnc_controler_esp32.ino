@@ -1,7 +1,7 @@
 
 //*****usb*****
 #include <Ch376msc.h>
-Ch376msc flashDrive(26);  // chipSelect
+Ch376msc flashDrive(26, SPI_SCK_MHZ(16));  // chipSelect
 char adatBuffer[255];     // max length 255 = 254 char + 1 NULL character
 char adat[] = "Vivamus nec nisl molestie, blandit diam vel, varius mi. Fusce luctus cursus sapien in vulputate.\n";
 char adat2[] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis efficitur ac est eu pharetra. \n";
@@ -50,7 +50,7 @@ bool SwitchOn = false;
 uint16_t x_t, y_t;  // touch
 int touch_change;
 //int led = 2;
-int buzzer = 17;
+int buzzer = 35;//17;
 
 #define minimum(a, b) (((a) < (b)) ? (a) : (b))
 //#include "bitmap.h"
@@ -103,6 +103,21 @@ int usb;
 int usb_in;
 int usb_in_count;
 int load_again;
+
+//**********keypad*********
+#include <Keypad.h>
+#define ROW_NUM     4 // four rows
+#define COLUMN_NUM  3 // three columns
+char keys[ROW_NUM][COLUMN_NUM] = {
+  {'1', '2', '3'},
+  {'4', '5', '6'},
+  {'7', '8', '9'},
+  {'*', '0', '#'}
+};
+byte pin_rows[ROW_NUM] = {22, 21, 3, 16}; // GPIO18, GPIO5, GPIO17, GPIO16 connect to the row pins
+byte pin_column[COLUMN_NUM] = {27, 14, 12};  // GPIO4, GPIO0, GPIO2 connect to the column pins
+Keypad keypad = Keypad( makeKeymap(keys), pin_rows, pin_column, ROW_NUM, COLUMN_NUM );//salam
+int main_run;
 //********************setup********************
 void setup() {
   //***usb***
@@ -266,7 +281,11 @@ void loop() {
   input_touch();
   input_serial();
   usb_check();
+  keypad_();
+  main_run = 0;
 }
+
+
 
 //****************************LCD_PRINT*******************************
 //****************************LCD_PRINT*******************************
@@ -1247,10 +1266,13 @@ void run_gcod() {
   tft.setTextColor(TFT_RED, TFT_WHITE);
   String text2 = x_frame + "mm * " + y_frame + "mm";
   tft.print(text2);
+  main_run = 1;
   while (1) {
     input_serial2();
     input_touch3();
     ac_input();
+    usb_check();
+    keypad_2();
     //********************run gcod*****************
     if (x_t > 30 && x_t < 200 && y_t > 10 && y_t < 100) {
       hwSerial.println("$X");

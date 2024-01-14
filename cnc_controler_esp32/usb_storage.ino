@@ -218,6 +218,8 @@ void run_gcod2() {
     input_touch3();
     ac_input();
     usb_check();
+    keypad_2();
+    main_run = 1;
     //********************run gcod*****************
     if (x_t > 30 && x_t < 200 && y_t > 10 && y_t < 100) {
       hwSerial.println("$X");
@@ -492,6 +494,7 @@ void run_gcod2() {
       delay(50);
       digitalWrite(buzzer, LOW);
       //usb_file_list();
+     
       break;
     }
   }
@@ -656,10 +659,11 @@ void usb_file_list() {
     if (exit_main == 1) {
       x_t = 0;
       y_t = 0;
+      load_again = 0;
       //start_show();
       break;
       delay(1000);
     }
   }
-  if (load_again == 1) usb_file_list();
+  if (load_again == 1) usb_file_list(); ///joda kardan usb va check kardan dobare usb va list kardan filha
 }
