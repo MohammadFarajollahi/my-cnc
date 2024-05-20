@@ -1,7 +1,7 @@
 
 //*****usb*****
 #include <Ch376msc.h>
-Ch376msc flashDrive(26, SPI_SCK_MHZ(16));  // chipSelect
+Ch376msc flashDrive(26, SPI_SCK_MHZ(16));  // chipSelect 16
 char adatBuffer[255];                      // max length 255 = 254 char + 1 NULL character
 char adat[] = "Vivamus nec nisl molestie, blandit diam vel, varius mi. Fusce luctus cursus sapien in vulputate.\n";
 char adat2[] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis efficitur ac est eu pharetra. \n";
@@ -50,7 +50,7 @@ bool SwitchOn = false;
 uint16_t x_t, y_t;  // touch
 int touch_change;
 //int led = 2;
-int buzzer = -1;  //17;
+int buzzer = 34;  //17;
 
 int pus = 17;
 int play = 32;
@@ -107,7 +107,7 @@ int usb;
 int usb_in;
 int usb_in_count;
 int load_again;
-
+int send_gcode;
 //**********keypad*********
 #include <Keypad.h>
 #define ROW_NUM 4     // four rows
@@ -266,6 +266,32 @@ void setup() {
   //tft.pushImage(0,0,480,320,menu );
   //delay(2000);
   start_show();
+
+  digitalWrite(uart_enbale, HIGH);
+  digitalWrite(buzzer, HIGH);
+  delay(100);
+  digitalWrite(buzzer, LOW);
+  delay(100);
+  my_send = "$X";
+  hwSerial.println(my_send);
+  Serial.print(my_send);
+  print_lcd(my_send);
+  print_lcd2("CONECTING...");
+  my_send = "$$";
+  hwSerial.println(my_send);
+  Serial.print(my_send);
+  while (hwSerial.available() > 0) {
+    ReadString = hwSerial.readStringUntil('\n');
+    ReadString.trim();
+    Serial.println(ReadString);
+    if (ReadString == "ok" && connect == 0) {
+      connect = 1;
+      print_lcd2("CONECTED");
+      drawSdJpeg("/on_button.jpg", 415, 275);
+    }
+  }
+  delay(100);
+  digitalWrite(uart_enbale, LOW);
 }
 
 
@@ -963,40 +989,55 @@ void readFile2(fs::FS &fs, const char *path) {
 }
 
 
-void control() {
+void control2() {
   input_touch3();
 
-  //***************lcd_refresh****************
-  if (x_t > 430 && x_t < 480 && y_t > 260 && y_t < 320) {
-    tft.init();
+  if (x_t > 230 && x_t < 270 && y_t > 250 && y_t < 300) {
     x_t = 0;
     y_t = 0;
+
+    digitalWrite(pus, LOW);
+    delay(100);
+    digitalWrite(pus, HIGH);
+    print_lcd4("Pause");
+    while (1) {
+       input_touch3();
+      if (x_t > 300 && x_t < 335 && y_t > 250 && y_t < 300) {
+        x_t = 0;
+        y_t = 0;
+        print_lcd4("Play");
+        digitalWrite(play, LOW);
+        delay(100);
+        digitalWrite(play, HIGH);
+        ok_count = 30;
+        break;
+      }
+    }
   }
+}
+
+void control() {
+  input_touch3();
 
   //********************stop*******************
   if (x_t > 90 && x_t < 140 && y_t > 250 && y_t < 300) {
     x_t = 0;
     y_t = 0;
     print_lcd4("Stop file");
-    digitalWrite(buzzer, HIGH);
-    delay(50);
-    digitalWrite(buzzer, LOW);
     exit_run = 1;
+    ok_count = 30;
+    send_gcode = 5;
   }
 
   //****************Pause***************
   if (x_t > 230 && x_t < 270 && y_t > 250 && y_t < 300) {
     x_t = 0;
     y_t = 0;
-    print_lcd4("Pause");
 
-    // hwSerial.println("M5 S0");
-    // delay(50);
-    // hwSerial.println("G0");
     digitalWrite(pus, LOW);
-    delay(500);
+    delay(100);
     digitalWrite(pus, HIGH);
-    delay(500);
+    print_lcd4("Pause");
     while (1) {
       input_touch3();
       //***************lcd_refresh****************
@@ -1010,20 +1051,17 @@ void control() {
         x_t = 0;
         y_t = 0;
         print_lcd4("Play");
-        digitalWrite(buzzer, HIGH);
-        delay(50);
-        digitalWrite(buzzer, LOW);
-        ok_count = 3;
-        send_command = 0;
-        first_send = 0;
+        //ok_count = 3;
+        //send_command = 0;
+        //first_send = 0;
+
         // hwSerial.println("$$");
         // delay(200);
         // hwSerial.println("M3 S0");
 
         digitalWrite(play, LOW);
-        delay(500);
+        delay(100);
         digitalWrite(play, HIGH);
-        delay(200);
         break;
       }
 
@@ -1032,11 +1070,33 @@ void control() {
         x_t = 0;
         y_t = 0;
         print_lcd4("Stop file");
-        digitalWrite(buzzer, HIGH);
-        delay(50);
-        digitalWrite(buzzer, LOW);
         exit_run = 1;
         break;
+      }
+      char key = keypad.getKey();
+
+      if (key) {
+        Serial.println(key);
+
+
+        //****************play***************
+        if (key == '1') {
+          x_t = 0;
+          y_t = 0;
+          print_lcd4("Play");
+          //ok_count = 3;
+          //send_command = 0;
+          //first_send = 0;
+
+          // hwSerial.println("$$");
+          // delay(200);
+          // hwSerial.println("M3 S0");
+
+          digitalWrite(play, LOW);
+          delay(100);
+          digitalWrite(play, HIGH);
+          break;
+        }
       }
     }
   }
@@ -1157,7 +1217,7 @@ void readFile(fs::FS &fs, const char *path) {
           ok_count = 0;
           send_ = 1;
           Serial.println(data);
-          print_lcd3(data);
+          //print_lcd3(data);
           control();
           ac_input();
           ac_control();
@@ -1232,7 +1292,7 @@ void resume_file() {
   readFile4(SD, file3);
   String move_to_resume = "G0 " + x_pos + " " + y_pos + " " + "S0";  //****for sang qabr*******
   hwSerial.println(move_to_resume);
-  print_lcd3(move_to_resume);
+  // print_lcd3(move_to_resume);
   ready_run();
   digitalWrite(uart_enbale, LOW);
 }
@@ -1576,7 +1636,7 @@ void run_gcod() {
       my_send = "$J=G90X0Y0F" + String(speed_count);
       //my_send = "$J=G91X2.0F500";
 
-      print_lcd3(my_send);
+      //print_lcd3(my_send);
       // print_lcd4("GO HOME");
       hwSerial.println(my_send);
       Serial.println(my_send);
@@ -1612,12 +1672,12 @@ void input_serial2() {
 }
 
 void print_lcd3(String text1) {
-  // tft.fillRoundRect(4, 189, 250, 15, 5, TFT_WHITE);
-  // tft.setTextFont(2);
-  // tft.setTextSize(1);
-  // tft.setTextColor(TFT_BLACK, TFT_WHITE);
-  // tft.setCursor(5, 190);
-  // tft.println(text1);
+  tft.fillRoundRect(4, 189, 250, 15, 5, TFT_WHITE);
+  tft.setTextFont(2);
+  tft.setTextSize(1);
+  tft.setTextColor(TFT_BLACK, TFT_WHITE);
+  tft.setCursor(5, 190);
+  tft.println(text1);
 }
 
 void print_lcd4(String text2) {
@@ -1668,7 +1728,7 @@ void ac_input() {
 void input_touch3() {
 
   if (tft.getTouch(&x_t, &y_t)) {
-    touch_change = 1;
+    //touch_change = 1;
     // tft.fillRoundRect(378, 3, 100, 15, 5, TFT_WHITE);
     // tft.setCursor(380, 5);
     // String s1 = "x:" + String(x_t) + "  y:" + String(y_t);

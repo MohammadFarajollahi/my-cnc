@@ -46,7 +46,7 @@ void readFile4_usb(String ss) {
     }
   }
   ///Serial.println(s1);
- flashDrive.closeFile();
+  flashDrive.closeFile();
 }
 
 
@@ -73,6 +73,7 @@ void resume_file2() {
   String move_to_resume = "G0 " + x_pos + " " + y_pos + " " + "S0";  //****for sang qabr*******
   hwSerial.println(move_to_resume);
   print_lcd3(move_to_resume);
+ 
   delay(2000);
   ready_run2();
   digitalWrite(uart_enbale, LOW);

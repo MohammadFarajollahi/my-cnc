@@ -1,4 +1,134 @@
 
+
+void key_control() {
+  char key = keypad.getKey();
+
+  if (key) {
+    Serial.println(key);
+    //***x+***
+    if (key == '3') {
+      print_lcd4("Pause");
+      // hwSerial.println("M5 S0");
+      // delay(50);
+      // hwSerial.println("G0");
+      digitalWrite(pus, LOW);
+      delay(500);
+      digitalWrite(pus, HIGH);
+      while (1) {
+        input_touch3();
+        //***************lcd_refresh****************
+        if (x_t > 430 && x_t < 480 && y_t > 260 && y_t < 320) {
+          tft.init();
+          x_t = 0;
+          y_t = 0;
+        }
+        //****************play***************
+        if (x_t > 300 && x_t < 335 && y_t > 250 && y_t < 300) {
+          x_t = 0;
+          y_t = 0;
+          print_lcd4("Play");      
+          digitalWrite(play, LOW);
+          delay(100);
+          digitalWrite(play, HIGH);
+          break;
+        }
+
+        //*************STOP************
+        if (x_t > 90 && x_t < 140 && y_t > 250 && y_t < 300) {
+          x_t = 0;
+          y_t = 0;
+          print_lcd4("Stop file");
+          send_gcode = 5;
+          ok_count = 30;
+          exit_run = 1;
+          break;
+        }
+
+        //*****keyboard*****
+        char key = keypad.getKey();
+
+        if (key) {
+          Serial.println(key);
+
+
+          //****************play***************
+          if (key == '1') {
+            x_t = 0;
+            y_t = 0;
+            print_lcd4("Play");          
+            digitalWrite(play, LOW);
+            delay(100);
+            digitalWrite(play, HIGH);
+            break;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+void key_control2() {
+  char key = keypad.getKey();
+
+  if (key) {
+    //***x+***
+    if (key == '3') {
+      digitalWrite(pus, LOW);
+      delay(250);
+      digitalWrite(pus, HIGH);
+      print_lcd4("Pause");
+      while (1) {
+        input_touch3();
+        //***************lcd_refresh****************
+        if (x_t > 430 && x_t < 480 && y_t > 260 && y_t < 320) {
+          tft.init();
+          x_t = 0;
+          y_t = 0;
+        }
+        //****************play***************
+        if (x_t > 300 && x_t < 335 && y_t > 250 && y_t < 300) {
+          x_t = 0;
+          y_t = 0;
+          print_lcd4("Play");
+          ok_count = 30;
+          digitalWrite(play, LOW);
+          delay(100);
+          digitalWrite(play, HIGH);
+          break;
+        }
+
+        //*************STOP************
+        if (x_t > 90 && x_t < 140 && y_t > 250 && y_t < 300) {
+          x_t = 0;
+          y_t = 0;
+          print_lcd4("Stop file");
+          exit_run = 1;
+          send_gcode = 5;
+          ok_count = 30;
+          break;
+        }
+
+        //*****keyboard*****
+        char key = keypad.getKey();
+
+        if (key) {
+          //****************play***************
+          if (key == '1') {
+            x_t = 0;
+            y_t = 0;     
+            ok_count = 30;
+            print_lcd4("Play");
+            digitalWrite(play, LOW);
+            delay(250);
+            digitalWrite(play, HIGH);
+            break;
+          }
+        }
+      }
+    }
+  }
+}
 ///*********55555555*************
 ///*********55555555*********************
 ///*********55555555***************************
@@ -32,7 +162,7 @@ void readFile2(String ss) {
 
 
       if (send_ == 1) {
-        if (resume_mode == 1) {
+        if (resume_mode == 1) {  //****resume mode on****
           while (1) {
             readMore = flashDrive.readFileUntil('\n', adatBuffer, sizeof(adatBuffer));  //new line character
             data = adatBuffer;
@@ -41,21 +171,23 @@ void readFile2(String ss) {
           }
         }
 
-        if (resume_mode == 0) {
+        if (resume_mode == 0) {                                                       //****resume mode off****
           readMore = flashDrive.readFileUntil('\n', adatBuffer, sizeof(adatBuffer));  //new line character
           data = adatBuffer;
           ++line_number2;
         }
+
+        ++send_gcode;
         hwSerial.println(data);
         data_save = data;
       }
 
       if (first_send == 0) ++send_command;
-
-      if (first_send == 1) {
+      key_control2();
+      if (first_send == 1 && send_gcode >= 4) {
+        send_gcode = 0;
         while (1) {
-
-          control();
+           
           ReadString = hwSerial.readStringUntil('\n');
           ReadString.trim();
           Serial.println(ReadString);
@@ -63,12 +195,10 @@ void readFile2(String ss) {
             ++ok_count;
             ReadString = "";
           }
-           if (exit_run == 1) {
-              hwSerial.println("M5");
-              readMore = false;
-              break;
-            }
-          if (ok_count >= 4) {
+
+          key_control2();
+          if (ok_count >= 16) {
+            key_control();
             ok_count = 0;
             send_ = 1;
             Serial.println(data);
@@ -83,8 +213,8 @@ void readFile2(String ss) {
             }
             print_line(String(line_number2));
             //*********************Loading*********************
-            int loading = map(line_number2, 0, gcode_line, 7, 195);
-            tft.fillRoundRect(6, 151, loading, 13, 5, TFT_GREEN);
+            //int loading = map(line_number2, 0, gcode_line, 7, 195);
+            // tft.fillRoundRect(6, 151, loading, 13, 5, TFT_GREEN);
             //*********************Loading*********************
             //delay(500);
             ReadString = "";
@@ -95,7 +225,7 @@ void readFile2(String ss) {
       }
 
 
-      //*************************************first send**************************************8
+      //*************************************first send**************************************
       if (first_send == 0) {
         if (send_command >= 8) {
           first_send = 1;
@@ -113,6 +243,7 @@ void readFile2(String ss) {
             if (start_cammand >= 24) {
               //delay(5000);
               Serial.println("first ok");
+              send_gcode = 0;
               break;
             }
           }
@@ -129,13 +260,13 @@ void readFile2(String ss) {
   flashDrive.closeFile();
   hwSerial.println("M5");
   print_lcd4("***End file***");
-  digitalWrite(buzzer, HIGH);
-  delay(500);
-  digitalWrite(buzzer, LOW);
-  delay(500);
-  digitalWrite(buzzer, HIGH);
-  delay(1000);
-  digitalWrite(buzzer, LOW);
+  // digitalWrite(buzzer, HIGH);
+  // delay(500);
+  // digitalWrite(buzzer, LOW);
+  // delay(500);
+  // digitalWrite(buzzer, HIGH);
+  // delay(1000);
+  // digitalWrite(buzzer, LOW);
 }
 
 
@@ -164,14 +295,14 @@ void ready_run2() {
   print_lcd4("Start file ...");
   file1 = file_name;
 
-  delay(2000);
-  digitalWrite(buzzer, HIGH);
-  delay(200);
-  digitalWrite(buzzer, LOW);
-  delay(200);
-  digitalWrite(buzzer, HIGH);
-  delay(1000);
-  digitalWrite(buzzer, LOW);
+  // delay(2000);
+  // digitalWrite(buzzer, HIGH);
+  // delay(200);
+  // digitalWrite(buzzer, LOW);
+  // delay(200);
+  // digitalWrite(buzzer, HIGH);
+  // delay(1000);
+  // digitalWrite(buzzer, LOW);
   readFile2(file1);
   delay(200);
 }
@@ -354,33 +485,33 @@ void run_gcod2() {
     }
 
     //****************Frame***************
-    if (x_t > 360 && x_t < 400 && y_t > 250 && y_t < 300) {
-      digitalWrite(uart_enbale, HIGH);
-      x_t = 0;
-      y_t = 0;
-      print_lcd4("Frame");
-      digitalWrite(buzzer, HIGH);
-      delay(50);
-      digitalWrite(buzzer, LOW);
+    // if (x_t > 360 && x_t < 400 && y_t > 250 && y_t < 300) {
+    //   digitalWrite(uart_enbale, HIGH);
+    //   x_t = 0;
+    //   y_t = 0;
+    //   print_lcd4("Frame");
+    //   digitalWrite(buzzer, HIGH);
+    //   delay(50);
+    //   digitalWrite(buzzer, LOW);
 
-      String frame1 = "G0 Y" + y_frame + " " + "F" + String(speed_count);
-      hwSerial.println(frame1);
-      Serial.println(frame1);
-      delay(500);
-      frame1 = "G0 X" + x_frame + " " + "F" + String(speed_count);
-      hwSerial.println(frame1);
-      Serial.println(frame1);
-      delay(500);
-      frame1 = "G0 Y0 F" + String(speed_count);
-      hwSerial.println(frame1);
-      Serial.println(frame1);
-      delay(500);
-      frame1 = "G0 X0 F" + String(speed_count);
-      hwSerial.println(frame1);
-      Serial.println(frame1);
-      delay(500);
-      digitalWrite(uart_enbale, LOW);
-    }
+    //   String frame1 = "G0 Y" + y_frame + " " + "F" + String(speed_count);
+    //   hwSerial.println(frame1);
+    //   Serial.println(frame1);
+    //   delay(500);
+    //   frame1 = "G0 X" + x_frame + " " + "F" + String(speed_count);
+    //   hwSerial.println(frame1);
+    //   Serial.println(frame1);
+    //   delay(500);
+    //   frame1 = "G0 Y0 F" + String(speed_count);
+    //   hwSerial.println(frame1);
+    //   Serial.println(frame1);
+    //   delay(500);
+    //   frame1 = "G0 X0 F" + String(speed_count);
+    //   hwSerial.println(frame1);
+    //   Serial.println(frame1);
+    //   delay(500);
+    //   digitalWrite(uart_enbale, LOW);
+    // }
 
     //****************zero point***************
     if (x_t > 425 && x_t < 470 && y_t > 190 && y_t < 230) {
