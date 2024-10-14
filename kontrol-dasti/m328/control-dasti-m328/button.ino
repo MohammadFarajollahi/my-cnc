@@ -24,32 +24,32 @@ void button() {
     Serial.println("up");
     //simserial.println("$J=F2000 G91 X-1000");
     digitalWrite(uart, HIGH);
-    delay(15);
+    delay(1);
     while (1) {
       simserial.println("$J=G91X-0.1F500");
-      delay(10);
+      delay(10);  // 10
       if (digitalRead(k_up) == 1) {
         digitalWrite(uart, LOW);
         break;
       }
     }
-    delay(20);
+    delay(10);  // 20
   }
 
   if (digitalRead(k_down) == 0) {
     Serial.println("down");
     digitalWrite(uart, HIGH);
-    delay(20);
+    delay(1);
     // simserial.println("$J=F2000 G91 X1000");
     while (1) {
-      simserial.println("$J=G91X0.5F1000");
-      delay(20);
+      simserial.println("$J=G91X0.5F500");
+      delay(10);  // 20
       if (digitalRead(k_down) == 1) {
         digitalWrite(uart, LOW);
         break;
       }
     }
-    delay(20);
+    delay(10);  // 20
   }
 
   if (digitalRead(k_right) == 0) {
@@ -58,7 +58,7 @@ void button() {
     delay(20);
     // simserial.println("$J= G91F2000 Z3000");
     while (1) {
-      simserial.println("$J=G91Z0.5F1000");
+      simserial.println("$J=G91Z0.5F500");
       delay(20);
       if (digitalRead(k_right) == 1) {
         digitalWrite(uart, LOW);
@@ -75,7 +75,7 @@ void button() {
     delay(20);
     // simserial.println("$J= G91F2000 Z3000");
     while (1) {
-      simserial.println("$J=G91Z-0.5F1000");
+      simserial.println("$J=G91Z-0.5F500");
       delay(20);
       if (digitalRead(k_left) == 1) {
         digitalWrite(uart, LOW);

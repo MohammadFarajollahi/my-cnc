@@ -1,3 +1,12 @@
+//****WIFI*****
+#include <WiFi.h>
+#include <HTTPClient.h>
+const char *ssid = "ESP32-Access-Point";
+const char *password = "123456789";
+const char *serverNameTemp = "http://192.168.4.1/temperature";
+String temperature;
+unsigned long previousMillis = 0;
+const long interval = 5000;
 
 //*****usb*****
 #include <Ch376msc.h>
@@ -122,6 +131,9 @@ byte pin_rows[ROW_NUM] = { 22, 21, 3, 16 };                                     
 byte pin_column[COLUMN_NUM] = { 27, 14, 12 };                                         // GPIO4, GPIO0, GPIO2 connect to the column pins
 Keypad keypad = Keypad(makeKeymap(keys), pin_rows, pin_column, ROW_NUM, COLUMN_NUM);  //salam
 int main_run;
+int mini_cnc = 1;
+
+
 //********************setup********************
 void setup() {
   //***usb***
@@ -156,8 +168,15 @@ void setup() {
   //  delay(50);
   //  speed_count = EEPROM.readFloat(10);
   //  delay(50);
-  speed_count = 30000;
-  step_count = 20;
+  if (mini_cnc == 0) {
+    speed_count = 30000;
+    step_count = 20;
+  }
+
+  if (mini_cnc == 1) {
+    speed_count = 1000;
+    step_count = 5;
+  }
 
 
   digitalWrite(22, HIGH);  // Touch controller chip select (if used)
@@ -292,6 +311,16 @@ void setup() {
   }
   delay(100);
   digitalWrite(uart_enbale, LOW);
+
+  WiFi.begin(ssid, password);
+  Serial.println("Connecting");
+  // while(WiFi.status() != WL_CONNECTED) {
+  //   delay(500);
+  //   Serial.print(".");
+  // }
+  Serial.println("");
+  Serial.print("Connected to WiFi network with IP Address: ");
+  Serial.println(WiFi.localIP());
 }
 
 
@@ -327,6 +356,7 @@ void input_serial() {
 }
 
 void loop() {
+  WIFI_CONTROL();
   input_touch();
   input_serial();
   usb_check();
@@ -998,10 +1028,10 @@ void control2() {
 
     digitalWrite(pus, LOW);
     delay(100);
-    digitalWrite(pus, HIGH);
+    digitalWrite(pus, HIGH);//f:\ELECTRONIC\sherkat\DOZDGIR\full_gps\cod\gps_sim868\check.ino
     print_lcd4("Pause");
     while (1) {
-       input_touch3();
+      input_touch3();
       if (x_t > 300 && x_t < 335 && y_t > 250 && y_t < 300) {
         x_t = 0;
         y_t = 0;
