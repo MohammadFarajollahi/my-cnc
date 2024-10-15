@@ -98,15 +98,15 @@ void key_board_() {
     change = 1;
     Serial.println(key);
     if (key == '1') {
-      send_key = 1;
+      send_key = 10;
     }
 
     if (key == '2') {
-      send_key = 2;
+      send_key = 20;
     }
 
     if (key == '3') {
-      send_key = 3;
+      send_key = 70;
     }
 
     if (key == '4') {
@@ -114,11 +114,11 @@ void key_board_() {
     }
 
     if (key == '5') {
-      send_key = 5;
+      send_key = 21;
     }
 
     if (key == '6') {
-      send_key = 6;
+      send_key = 12;
     }
 
 
@@ -139,7 +139,7 @@ void key_board_() {
     }
 
     if (key == 'A') {
-      send_key = 5;
+      send_key = 13;
       ++pulse;
     }
 
