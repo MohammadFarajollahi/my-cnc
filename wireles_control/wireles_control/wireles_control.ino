@@ -1,16 +1,3 @@
-// #include <SPI.h>
-// #include <Wire.h>
-// #include <Adafruit_GFX.h>
-// #include <Adafruit_SSD1306.h>
-// #define SCREEN_WIDTH 128  // OLED display width, in pixels
-// #define SCREEN_HEIGHT 64  // OLED display height, in pixels
-// #define OLED_RESET -1     // Reset pin # (or -1 if sharing Arduino reset pin)
-// Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-// #define NUMFLAKES 10  // Number of snowflakes in the animation example
-// #define LOGO_HEIGHT 16
-// #define LOGO_WIDTH 16
-
-
 int pulse;
 int speed;
 int pulse1;
@@ -42,35 +29,32 @@ int old_key;
 const char* ssid = "ESP32-Access-Point";
 const char* password = "123456789";
 AsyncWebServer server(80);
-
+int led = 23;
 String readTemp() {
   return String(send_key);
 }
 
+
+////new lib
+#include <esp_netif.h>
+#include <esp_event.h>
+#include <esp_wifi.h>
+
+
+int check;
 void setup() {
   // Serial port for debugging purposes
   Serial.begin(115200);
   Serial.println();
-
+  pinMode(led, OUTPUT);
+  digitalWrite(led, HIGH);  // turn the LED on (HIGH is the voltage level)
+  delay(1000);              // wait for a second
+  digitalWrite(led, LOW);   // turn the LED off by making the voltage LOW
   change = 1;
   pulse1 = 5;
   speed1 = 500;
   pulse = 2;
   speed = 1;
-  //lcd
-  // if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
-  //   Serial.println(F("SSD1306 allocation failed"));
-  //   for (;;)
-  //     ;  // Don't proceed, loop forever
-  // }
-  // display.display();
-  // display.clearDisplay();
-  // display.setTextSize(1);       // Normal 1:1 pixel scale
-  // display.setTextColor(WHITE);  // Draw white text
-  // display.setCursor(0, 0);      // Start at top-left corner
-  // display.println(F("** MAZAND MACHINE **"));
-  // display.display();
-
   // Remove the password parameter, if you want the AP (Access Point) to be open
   WiFi.softAP(ssid, password);
   IPAddress IP = WiFi.softAPIP();
@@ -86,9 +70,32 @@ void setup() {
 void loop() {
   key_board_();
   delay(50);
-  //lcd();
+  if (check == 0) {
+    connect();
+  }
 }
 
+void connect() {
+  String response = "Connected devices:\n";
+  // ساختار برای ذخیره اطلاعات دستگاه‌های متصل
+  wifi_sta_list_t stationList;
+  esp_netif_sta_list_t netif_sta_list;
+  // گرفتن لیست دستگاه‌های متصل
+  esp_wifi_ap_get_sta_list(&stationList);
+  esp_netif_get_sta_list(&stationList, &netif_sta_list);
+
+  // نمایش مک آدرس دستگاه‌های متصل
+  for (int i = 0; i < stationList.num; i++) {
+    esp_netif_sta_info_t station = netif_sta_list.sta[i];
+    char mac[18];
+    sprintf(mac, "%02X:%02X:%02X:%02X:%02X:%02X", station.mac[0], station.mac[1], station.mac[2], station.mac[3], station.mac[4], station.mac[5]);
+    response += String(mac) + "\n";
+  }
+  String sub1 = response.substring(19, 21);  ///ch
+  if (sub1 == "8C") {
+    digitalWrite(led, HIGH);  // turn the LED on (HIGH is the voltage level)
+  }
+}
 
 
 void key_board_() {
@@ -166,7 +173,7 @@ void key_board_() {
       send_key = 60;
     }
 
-  delay(50);
+    delay(50);
     //////
   } else {
 

@@ -16,7 +16,7 @@ int pause_pin = 14;
 int reset_pin = 12;
 String wifi_input;
 float step_count;
-int speed_count;
+float speed_count;
 String my_send;
 int start_lcd;
 int state = 0;
@@ -44,8 +44,8 @@ void setup() {
 
   WiFi.mode(WIFI_STA);
   WiFiMulti.addAP("ESP32-Access-Point", "123456789");
-  speed_count = 2000;
-  step_count = 10;
+  speed_count = 6000;
+  step_count = 50;
 
   digitalWrite(uart_enbale, HIGH);
   delay(500);
@@ -65,6 +65,11 @@ void setup() {
       connect = 1;
       Serial.println("Connected to GRBL");
     }
+    sub1 = ReadString.substring(0, 1);
+    if (sub1 == "$") {
+      connect = 1;
+      Serial.println("Connected to GRBL");
+    }
   }
 
   delay(100);
@@ -81,10 +86,10 @@ void loop() {
       if (reset_count >= 3) {
         Serial.print("reset avr");
         reset_count = 0;
-        digitalWrite(reset_pin, HIGH);
-        delay(100);
-        digitalWrite(reset_pin, LOW);
-        delay(100);
+        // digitalWrite(reset_pin, HIGH);
+        // delay(100);
+        // digitalWrite(reset_pin, LOW);
+        // delay(100);
       }
       delay(300);
       connect_count = 0;
@@ -121,6 +126,11 @@ void loop() {
         connect = 1;
         Serial.println("Connected to GRBL");
       }
+      sub1 = ReadString.substring(0, 1);
+      if (sub1 == "$") {
+        connect = 1;
+        Serial.println("Connected to GRBL");
+      }
     }
   }
 
@@ -138,8 +148,9 @@ void loop() {
           String payload = http.getString();
 
           wifi_input = payload;
+          //Serial.println(wifi_input);
 
-          if (wifi_input != "11") Serial.println(wifi_input);
+         //if (wifi_input != "11") Serial.println(wifi_input);
           //************Y+*************
           if (wifi_input == "2") {
 
@@ -148,9 +159,9 @@ void loop() {
             delay(50);
             hwSerial.println(my_send);
             Serial.println(my_send);
-            delay(1);
+            delay(10);
             digitalWrite(uart_enbale, LOW);
-            delay(300);
+            delay(100);
           }
 
 
@@ -163,9 +174,9 @@ void loop() {
 
             hwSerial.println(my_send);
             Serial.println(my_send);
-            delay(1);
+            delay(10);
             digitalWrite(uart_enbale, LOW);
-            delay(300);
+            delay(100);
           }
 
 
@@ -177,9 +188,9 @@ void loop() {
             delay(50);
             hwSerial.println(my_send);
             Serial.println(my_send);
-            delay(1);
+            delay(10);
             digitalWrite(uart_enbale, LOW);
-            delay(300);
+            delay(100);
           }
 
           //************x-*************
@@ -191,9 +202,9 @@ void loop() {
             // my_send = "$J=G91X2.0F500";
             hwSerial.println(my_send);
             Serial.println(my_send);
-            delay(1);
+            delay(10);
             digitalWrite(uart_enbale, LOW);
-            delay(300);
+            delay(100);
           }
 
 
@@ -206,9 +217,9 @@ void loop() {
             // my_send = "$J=G91X2.0F500";
             hwSerial.println(my_send);
             Serial.println(my_send);
-            delay(1);
+            delay(10);
             digitalWrite(uart_enbale, LOW);
-            delay(300);
+            delay(100);
           }
 
           //************Z-*************
@@ -219,86 +230,11 @@ void loop() {
             my_send = "$J=G91Z-" + String(step_count) + "F" + String(speed_count);
             hwSerial.println(my_send);
             Serial.println(my_send);
-            delay(1);
+            delay(10);
             digitalWrite(uart_enbale, LOW);
-            delay(300);
-          }
-
-          //************ZERO x*************
-          if (wifi_input == "0") {
-            digitalWrite(uart_enbale, HIGH);
-            my_send = "G92 X0";
-            delay(50);
-            hwSerial.println(my_send);
-            Serial.println(my_send);
             delay(100);
-            digitalWrite(uart_enbale, LOW);
-            delay(300);
           }
 
-           //************ZERO y*************
-          if (wifi_input == "21") {
-            digitalWrite(uart_enbale, HIGH);
-            my_send = "G92 Y0";
-            delay(50);
-            hwSerial.println(my_send);
-            Serial.println(my_send);
-            delay(100);
-            digitalWrite(uart_enbale, LOW);
-            delay(300);
-          }
-
-          //************ZERO z*************
-          if (wifi_input == "12") {
-            digitalWrite(uart_enbale, HIGH);
-            my_send = "G92 Z0";
-            delay(50);
-            hwSerial.println(my_send);
-            Serial.println(my_send);
-            delay(100);
-            digitalWrite(uart_enbale, LOW);
-            delay(300);
-          }
-
-           //************ZERO z*************
-          if (wifi_input == "13") {
-            digitalWrite(uart_enbale, HIGH);
-            my_send = "G92 X0 Y0 Z0";
-            delay(50);
-            hwSerial.println(my_send);
-            Serial.println(my_send);
-            delay(100);
-            digitalWrite(uart_enbale, LOW);
-            delay(300);
-          }
-
-          //************HOME*************
-          if (wifi_input == "60") {
-            digitalWrite(uart_enbale, HIGH);
-            delay(50);
-            hwSerial.println("$H");
-            delay(1);
-            digitalWrite(uart_enbale, LOW);
-            delay(3000);
-          }
-
-          //************BLINK*************
-          if (wifi_input == "5") {
-
-            digitalWrite(uart_enbale, HIGH);
-            delay(50);
-            Serial.print("home");
-            hwSerial.println("M3 S1000");
-            delay(50);
-            hwSerial.println("G1 F1000");
-            delay(150);
-            hwSerial.println("M5 S0");
-            delay(50);
-            hwSerial.println("G0");
-            delay(100);
-            digitalWrite(uart_enbale, LOW);
-            delay(3000);
-          }
 
           //********step_setting**********
           if (wifi_input == "30") {
@@ -335,7 +271,90 @@ void loop() {
             delay(100);
           }
 
+
+
+          // //************ZERO x*************
+          if (wifi_input == "21") {
+            // digitalWrite(uart_enbale, HIGH);
+            // my_send = "G92 X0";
+            // delay(50);
+            // hwSerial.println(my_send);
+            // Serial.println(my_send);
+            // delay(10);
+            // digitalWrite(uart_enbale, LOW);
+            // delay(100);
+            speed_count = speed_count + 500;
+            if (speed_count > 8000) speed_count = 8000;
+            Serial.println(String(speed_count));
+            delay(300);
+          }
+
+          if (wifi_input == "20") {
+            //Serial.println("reset");
+            digitalWrite(reset_pin, HIGH);
+            delay(100);
+            digitalWrite(reset_pin, LOW);
+            delay(100);
+            //connect = 0;
+            ESP.reset();
+          }
+
+          // //************ZERO y*************
+          if (wifi_input == "0") {
+            // digitalWrite(uart_enbale, HIGH);
+            // my_send = "G92 Y0";
+            // delay(50);
+            // hwSerial.println(my_send);
+            // Serial.println(my_send);
+            // delay(10);
+            // digitalWrite(uart_enbale, LOW);
+            // delay(100);
+            speed_count = speed_count - 500;
+            if (speed_count < 500) speed_count = 500;
+            Serial.println(String(speed_count));
+            delay(300);
+          }
+
+          //************ZERO z*************
+          if (wifi_input == "12") {
+            digitalWrite(uart_enbale, HIGH);
+            my_send = "G92 Z0";
+            delay(50);
+            hwSerial.println(my_send);
+            Serial.println(my_send);
+            delay(100);
+            digitalWrite(uart_enbale, LOW);
+            delay(100);
+            //Serial.print("zero Z");
+          }
+
+          //************ZERO x&y*************
+          if (wifi_input == "13") {
+            digitalWrite(uart_enbale, HIGH);
+            my_send = "G92 X0 Y0";
+            delay(50);
+            hwSerial.println(my_send);
+            Serial.println(my_send);
+            delay(100);
+            digitalWrite(uart_enbale, LOW);
+            delay(100);
+          }
+
+
+          //************HOME*************
+          if (wifi_input == "60") {
+            digitalWrite(uart_enbale, HIGH);
+            delay(50);
+            hwSerial.println("$H");
+            delay(1);
+            digitalWrite(uart_enbale, LOW);
+            delay(3000);
+          }
+
+
+
           if (wifi_input == "10") {
+            Serial.println("start");
             digitalWrite(start_pin, HIGH);
             delay(300);
             digitalWrite(start_pin, LOW);
@@ -343,6 +362,7 @@ void loop() {
           }
 
           if (wifi_input == "70") {
+            Serial.println("pause");
             digitalWrite(pause_pin, HIGH);
             delay(300);
             digitalWrite(pause_pin, LOW);
@@ -350,28 +370,9 @@ void loop() {
           }
 
 
-          if (wifi_input == "20") {
-            digitalWrite(reset_pin, HIGH);
-            delay(100);
-            digitalWrite(reset_pin, LOW);
-            delay(100);
-          }
-          //********speed_setting**********
-          // if (wifi_input == "30") {
-          //   speed_count = speed_count + 500;
-          //   if (speed_count > 40000) speed_count = 40000;
-          //   Serial.println(String(speed_count));
-          //   delay(100);
-          // }
 
-          // if (wifi_input == "40") {
-          //   speed_count = speed_count - 500;
-          //   if (speed_count < 500) speed_count = 500;
-          //   Serial.println(String(speed_count));
-          //   delay(100);
-          // }
-          wifi_input = "";
-          //delay(200);
+
+          ///////////////////////
         }
       }
     }
